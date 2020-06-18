@@ -40,6 +40,7 @@ def init_db(db):
             for g in t["goals"]:
                 goal = db.session.query(Goal).get(g)
                 teacher.goals.append(goal) # цели
+            db.session.commit()
             for day in t["free"]:
                 schedule = [Schedule(teacher_id=t["id"], day=day, time=time, is_free=t["free"][day][time]) for time in t["free"][day]]
                 db.session.add_all(schedule) # расписание
