@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <main class="container mt-3">
+    <div class="row mt-5">
+      <div class="col-10 col-md-6 offset-1 offset-md-3 mb-3">
+        <form action="{{ url_for('render_booking', id_teacher=teacher.id, day=day, time=time) }}" class="card mb-3" method="POST">
+          <div class="card-body text-center pt-5">
+            <img src="{{ teacher.picture }}" class="mb-3" width="95" alt="">
+            <h2 class="h5 card-title mt-2 mb-2">{{ teacher.name }}</h2>
+            <p class="my-1">Запись на пробный урок</p>
+            <p class="my-1">{{ free.day_name.name }}, {{ time }}</p>
+          </div>
+          <hr />
+          <div class="card-body mx-3">
+            {% if (free.is_free) and not(free.booking_id) %}
+
+              {{ form.name.label(class="mb-1 mt-2") }}
+              {{ form.name(class="form-control") }}
+
+              {{ form.phone.label(class="mb-1 mt-2") }}
+              {{ form.phone(class="form-control") }}
+              {{ form.csrf_token }}
+              <input type="submit" class="btn btn-primary btn-block mt-4" value="Записаться на пробный урок">
+            {% else %}Время кем-то уже занято.<br>
+              <a href="{{ url_for('render_teacher', id_teacher=teacher.id) }}">Выбрать другое время</a>
+            {% endif %}
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+{% endblock %}
+
